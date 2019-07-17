@@ -30,8 +30,13 @@ class bet(Resource):
 
 class auth(Resource):
     def post(self):
-        pass
-
+        parser = reqparse.RequestParser()
+        parser.add_argument('code', type = str, required = True)
+        args = parser.parse_args()
+        if collection.distinct(args)[0]['balance']:
+            return collection.distinct(args['code'])[0]['balance']
+        return {'msg':'wrong code'}
+        
 class history(Resource):
     def get(self):
         return collection.distinct("code")[0]['history']
@@ -39,7 +44,15 @@ class history(Resource):
 class bet2(Resource):#genius
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("bet", required = True)
-        args = parser.args()
-        return args['bet']
+        parser.add_argument('code', type = str, required = True)
+        parser.add_argument("bet", type = str, required = True)
+        parser.add_argument("quan", type = int, required = True)
+        parser.add_argument("odds", type = float, required = True)
+        parser.add_argument("predict", type = int, reqired = True)
+        args = parser.parse_args()
+        if collection
+        collection.insert()
 
+
+api.add_resource(bet2, '/')
+app.run(port=5000)
